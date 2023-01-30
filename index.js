@@ -26,6 +26,9 @@ async function start(){
             console.log(id);
             try{
                 const telegram = await Telegram.findOne({id})
+                if(!telegram){
+                    return await bot.sendMessage(chat.id, `Такий покупець відсутній`)
+                }
                 const {username, first_name} = JSON.parse(telegram.chat)
 
                 await bot.sendMessage(chat.id, `Замовник: ${first_name || username}\nЗамовлення: ${telegram.content}\nКонтакт: ${telegram.contact}`)
